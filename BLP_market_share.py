@@ -8,6 +8,7 @@ This script calculate the market share.
 """
 import numpy as np
 from progress import progress as pg
+import time
 
 def calculate_utility(estimates, sigma, data, end_var, v):
     '''
@@ -103,6 +104,8 @@ def calculate_n_consumer_market_share(estimates, sigma, data, end_var, v_set, mk
     output:
         mkt_shr: numpy array, the average market share of n consumers.
     '''
+    tic = time.time()
+    
     mkt_shr = np.zeros((len(data), ))
     for i in range(n_consumers):
         uti = calculate_utility(estimates, sigma, data, end_var, v_set[i])
@@ -111,4 +114,7 @@ def calculate_n_consumer_market_share(estimates, sigma, data, end_var, v_set, mk
         pg(i + 1, n_consumers, work, congrats)
     mkt_shr = mkt_shr/n_consumers
 
+    toc = time.time()
+    print('')
+    print('Total time elaped is ' + str(round((toc - tic)/60, 2)) + ' mins.')
     return(mkt_shr)

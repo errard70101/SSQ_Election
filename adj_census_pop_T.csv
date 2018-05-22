@@ -1,157 +1,157 @@
-depcity,arrcity,depcity_code,arrcity_code,cencus_pop
-Taipei,New Taipei,1,2,93118 
-Taipei,Taoyuan,1,3,35649 
-Taipei,Taichung,1,4,41262 
-Taipei,Tainan,1,5,9467 
-Taipei,Kaohsiung,1,6,15134 
-Taipei,Hsinchu,1,8,18509 
-Taipei,Chiayi,1,9,6400 
-Taipei,Miaoli,1,11,22654 
-Taipei,Changhua,1,12,19471 
-Taipei,Nantou,1,13,5883 
-Taipei,Yunlin,1,14,6586 
-Taipei,Pingtung,1,16,6531 
-New Taipei,Taipei,2,1,123287 
-New Taipei,Taoyuan,2,3,19083 
-New Taipei,Taichung,2,4,12339 
-New Taipei,Tainan,2,5,6661 
-New Taipei,Kaohsiung,2,6,10318 
-New Taipei,Hsinchu,2,8,7604 
-New Taipei,Chiayi,2,9,10114 
-New Taipei,Miaoli,2,11,6704 
-New Taipei,Changhua,2,12,10906 
-New Taipei,Nantou,2,13,5403 
-New Taipei,Yunlin,2,14,16942 
-New Taipei,Pingtung,2,16,7216 
-Taoyuan,Taipei,3,1,25116 
-Taoyuan,New Taipei,3,2,40108 
-Taoyuan,Taichung,3,4,9748 
-Taoyuan,Tainan,3,5,6041 
-Taoyuan,Kaohsiung,3,6,8766 
-Taoyuan,Hsinchu,3,8,12262 
-Taoyuan,Chiayi,3,9,5855 
-Taoyuan,Miaoli,3,11,6208 
-Taoyuan,Changhua,3,12,5701 
-Taoyuan,Nantou,3,13,2714 
-Taoyuan,Yunlin,3,14,6286 
-Taoyuan,Pingtung,3,16,4241 
-Taichung,Taipei,4,1,7658 
-Taichung,New Taipei,4,2,10260 
-Taichung,Taoyuan,4,3,5927 
-Taichung,Tainan,4,5,9551 
-Taichung,Kaohsiung,4,6,11198 
-Taichung,Hsinchu,4,8,4167 
-Taichung,Chiayi,4,9,7566 
-Taichung,Miaoli,4,11,8041 
-Taichung,Changhua,4,12,26710 
-Taichung,Nantou,4,13,22105 
-Taichung,Yunlin,4,14,12460 
-Taichung,Pingtung,4,16,6094 
-Tainan,Taipei,5,1,3560 
-Tainan,New Taipei,5,2,5193 
-Tainan,Taoyuan,5,3,3508 
-Tainan,Taichung,5,4,6238 
-Tainan,Kaohsiung,5,6,20638 
-Tainan,Hsinchu,5,8,1375 
-Tainan,Chiayi,5,9,8034 
-Tainan,Miaoli,5,11,1015 
-Tainan,Changhua,5,12,4822 
-Tainan,Nantou,5,13,1813 
-Tainan,Yunlin,5,14,4155 
-Tainan,Pingtung,5,16,6381 
-Kaohsiung,Taipei,6,1,6103 
-Kaohsiung,New Taipei,6,2,10164 
-Kaohsiung,Taoyuan,6,3,6061 
-Kaohsiung,Taichung,6,4,11641 
-Kaohsiung,Tainan,6,5,26356 
-Kaohsiung,Hsinchu,6,8,2844 
-Kaohsiung,Chiayi,6,9,9659 
-Kaohsiung,Miaoli,6,11,1881 
-Kaohsiung,Changhua,6,12,7524 
-Kaohsiung,Nantou,6,13,3449 
-Kaohsiung,Yunlin,6,14,6332 
-Kaohsiung,Pingtung,6,16,29044 
-Hsinchu,Taipei,8,1,9001 
-Hsinchu,New Taipei,8,2,12398 
-Hsinchu,Taoyuan,8,3,10911 
-Hsinchu,Taichung,8,4,7308 
-Hsinchu,Tainan,8,5,3356 
-Hsinchu,Kaohsiung,8,6,5271 
-Hsinchu,Chiayi,8,9,2089 
-Hsinchu,Miaoli,8,11,6035 
-Hsinchu,Changhua,8,12,3557 
-Hsinchu,Nantou,8,13,1739 
-Hsinchu,Yunlin,8,14,1647 
-Hsinchu,Pingtung,8,16,2405 
-Chiayi,Taipei,9,1,2064 
-Chiayi,New Taipei,9,2,4673 
-Chiayi,Taoyuan,9,3,2085 
-Chiayi,Taichung,9,4,4558 
-Chiayi,Tainan,9,5,5469 
-Chiayi,Kaohsiung,9,6,4657 
-Chiayi,Hsinchu,9,8,709 
-Chiayi,Miaoli,9,11,483 
-Chiayi,Changhua,9,12,3113 
-Chiayi,Nantou,9,13,1506 
-Chiayi,Yunlin,9,14,6362 
-Chiayi,Pingtung,9,16,1382 
-Miaoli,Taipei,11,1,1274 
-Miaoli,New Taipei,11,2,2581 
-Miaoli,Taoyuan,11,3,2691 
-Miaoli,Taichung,11,4,3584 
-Miaoli,Tainan,11,5,456 
-Miaoli,Kaohsiung,11,6,744 
-Miaoli,Hsinchu,11,8,3343 
-Miaoli,Chiayi,11,9,449 
-Miaoli,Changhua,11,12,1239 
-Miaoli,Nantou,11,13,628 
-Miaoli,Yunlin,11,14,454 
-Miaoli,Pingtung,11,16,348 
-Changhua,Taipei,12,1,1769 
-Changhua,New Taipei,12,2,2553 
-Changhua,Taoyuan,12,3,1377 
-Changhua,Taichung,12,4,6691 
-Changhua,Tainan,12,5,1456 
-Changhua,Kaohsiung,12,6,1771 
-Changhua,Hsinchu,12,8,713 
-Changhua,Chiayi,12,9,968 
-Changhua,Miaoli,12,11,662 
-Changhua,Nantou,12,13,2484 
-Changhua,Yunlin,12,14,1962 
-Changhua,Pingtung,12,16,726 
-Nantou,Taipei,13,1,671 
-Nantou,New Taipei,13,2,889 
-Nantou,Taoyuan,13,3,412 
-Nantou,Taichung,13,4,6641 
-Nantou,Tainan,13,5,598 
-Nantou,Kaohsiung,13,6,908 
-Nantou,Hsinchu,13,8,190 
-Nantou,Chiayi,13,9,539 
-Nantou,Miaoli,13,11,351 
-Nantou,Changhua,13,12,2312 
-Nantou,Yunlin,13,14,780 
-Nantou,Pingtung,13,16,399 
-Yunlin,Taipei,14,1,1183 
-Yunlin,New Taipei,14,2,2738 
-Yunlin,Taoyuan,14,3,1179 
-Yunlin,Taichung,14,4,3002 
-Yunlin,Tainan,14,5,1317 
-Yunlin,Kaohsiung,14,6,1385 
-Yunlin,Hsinchu,14,8,437 
-Yunlin,Chiayi,14,9,2057 
-Yunlin,Miaoli,14,11,343 
-Yunlin,Changhua,14,12,2222 
-Yunlin,Nantou,14,13,1075 
-Yunlin,Pingtung,14,16,455 
-Pingtung,Taipei,16,1,1082 
-Pingtung,New Taipei,16,2,2441 
-Pingtung,Taoyuan,16,3,1565 
-Pingtung,Taichung,16,4,2136 
-Pingtung,Tainan,16,5,3257 
-Pingtung,Kaohsiung,16,6,14393 
-Pingtung,Hsinchu,16,8,489 
-Pingtung,Chiayi,16,9,1275 
-Pingtung,Miaoli,16,11,373 
-Pingtung,Changhua,16,12,1097 
-Pingtung,Nantou,16,13,493 
-Pingtung,Yunlin,16,14,737 
+depcity,arrcity,depcity_code,arrcity_code,census_pop
+Taipei,New Taipei,1,2,93118
+Taipei,Taoyuan,1,3,35649
+Taipei,Taichung,1,4,41262
+Taipei,Tainan,1,5,9467
+Taipei,Kaohsiung,1,6,15134
+Taipei,Hsinchu,1,8,18509
+Taipei,Chiayi,1,9,6400
+Taipei,Miaoli,1,11,22654
+Taipei,Changhua,1,12,19471
+Taipei,Nantou,1,13,5883
+Taipei,Yunlin,1,14,6586
+Taipei,Pingtung,1,16,6531
+New Taipei,Taipei,2,1,123287
+New Taipei,Taoyuan,2,3,19083
+New Taipei,Taichung,2,4,12339
+New Taipei,Tainan,2,5,6661
+New Taipei,Kaohsiung,2,6,10318
+New Taipei,Hsinchu,2,8,7604
+New Taipei,Chiayi,2,9,10114
+New Taipei,Miaoli,2,11,6704
+New Taipei,Changhua,2,12,10906
+New Taipei,Nantou,2,13,5403
+New Taipei,Yunlin,2,14,16942
+New Taipei,Pingtung,2,16,7216
+Taoyuan,Taipei,3,1,25116
+Taoyuan,New Taipei,3,2,40108
+Taoyuan,Taichung,3,4,9748
+Taoyuan,Tainan,3,5,6041
+Taoyuan,Kaohsiung,3,6,8766
+Taoyuan,Hsinchu,3,8,12262
+Taoyuan,Chiayi,3,9,5855
+Taoyuan,Miaoli,3,11,6208
+Taoyuan,Changhua,3,12,5701
+Taoyuan,Nantou,3,13,2714
+Taoyuan,Yunlin,3,14,6286
+Taoyuan,Pingtung,3,16,4241
+Taichung,Taipei,4,1,7658
+Taichung,New Taipei,4,2,10260
+Taichung,Taoyuan,4,3,5927
+Taichung,Tainan,4,5,9551
+Taichung,Kaohsiung,4,6,11198
+Taichung,Hsinchu,4,8,4167
+Taichung,Chiayi,4,9,7566
+Taichung,Miaoli,4,11,8041
+Taichung,Changhua,4,12,26710
+Taichung,Nantou,4,13,22105
+Taichung,Yunlin,4,14,12460
+Taichung,Pingtung,4,16,6094
+Tainan,Taipei,5,1,3560
+Tainan,New Taipei,5,2,5193
+Tainan,Taoyuan,5,3,3508
+Tainan,Taichung,5,4,6238
+Tainan,Kaohsiung,5,6,20638
+Tainan,Hsinchu,5,8,1375
+Tainan,Chiayi,5,9,8034
+Tainan,Miaoli,5,11,1015
+Tainan,Changhua,5,12,4822
+Tainan,Nantou,5,13,1813
+Tainan,Yunlin,5,14,4155
+Tainan,Pingtung,5,16,6381
+Kaohsiung,Taipei,6,1,6103
+Kaohsiung,New Taipei,6,2,10164
+Kaohsiung,Taoyuan,6,3,6061
+Kaohsiung,Taichung,6,4,11641
+Kaohsiung,Tainan,6,5,26356
+Kaohsiung,Hsinchu,6,8,2844
+Kaohsiung,Chiayi,6,9,9659
+Kaohsiung,Miaoli,6,11,1881
+Kaohsiung,Changhua,6,12,7524
+Kaohsiung,Nantou,6,13,3449
+Kaohsiung,Yunlin,6,14,6332
+Kaohsiung,Pingtung,6,16,29044
+Hsinchu,Taipei,8,1,9001
+Hsinchu,New Taipei,8,2,12398
+Hsinchu,Taoyuan,8,3,10911
+Hsinchu,Taichung,8,4,7308
+Hsinchu,Tainan,8,5,3356
+Hsinchu,Kaohsiung,8,6,5271
+Hsinchu,Chiayi,8,9,2089
+Hsinchu,Miaoli,8,11,6035
+Hsinchu,Changhua,8,12,3557
+Hsinchu,Nantou,8,13,1739
+Hsinchu,Yunlin,8,14,1647
+Hsinchu,Pingtung,8,16,2405
+Chiayi,Taipei,9,1,2064
+Chiayi,New Taipei,9,2,4673
+Chiayi,Taoyuan,9,3,2085
+Chiayi,Taichung,9,4,4558
+Chiayi,Tainan,9,5,5469
+Chiayi,Kaohsiung,9,6,4657
+Chiayi,Hsinchu,9,8,709
+Chiayi,Miaoli,9,11,483
+Chiayi,Changhua,9,12,3113
+Chiayi,Nantou,9,13,1506
+Chiayi,Yunlin,9,14,6362
+Chiayi,Pingtung,9,16,1382
+Miaoli,Taipei,11,1,1274
+Miaoli,New Taipei,11,2,2581
+Miaoli,Taoyuan,11,3,2691
+Miaoli,Taichung,11,4,3584
+Miaoli,Tainan,11,5,456
+Miaoli,Kaohsiung,11,6,744
+Miaoli,Hsinchu,11,8,3343
+Miaoli,Chiayi,11,9,449
+Miaoli,Changhua,11,12,1239
+Miaoli,Nantou,11,13,628
+Miaoli,Yunlin,11,14,454
+Miaoli,Pingtung,11,16,348
+Changhua,Taipei,12,1,1769
+Changhua,New Taipei,12,2,2553
+Changhua,Taoyuan,12,3,1377
+Changhua,Taichung,12,4,6691
+Changhua,Tainan,12,5,1456
+Changhua,Kaohsiung,12,6,1771
+Changhua,Hsinchu,12,8,713
+Changhua,Chiayi,12,9,968
+Changhua,Miaoli,12,11,662
+Changhua,Nantou,12,13,2484
+Changhua,Yunlin,12,14,1962
+Changhua,Pingtung,12,16,726
+Nantou,Taipei,13,1,671
+Nantou,New Taipei,13,2,889
+Nantou,Taoyuan,13,3,412
+Nantou,Taichung,13,4,6641
+Nantou,Tainan,13,5,598
+Nantou,Kaohsiung,13,6,908
+Nantou,Hsinchu,13,8,190
+Nantou,Chiayi,13,9,539
+Nantou,Miaoli,13,11,351
+Nantou,Changhua,13,12,2312
+Nantou,Yunlin,13,14,780
+Nantou,Pingtung,13,16,399
+Yunlin,Taipei,14,1,1183
+Yunlin,New Taipei,14,2,2738
+Yunlin,Taoyuan,14,3,1179
+Yunlin,Taichung,14,4,3002
+Yunlin,Tainan,14,5,1317
+Yunlin,Kaohsiung,14,6,1385
+Yunlin,Hsinchu,14,8,437
+Yunlin,Chiayi,14,9,2057
+Yunlin,Miaoli,14,11,343
+Yunlin,Changhua,14,12,2222
+Yunlin,Nantou,14,13,1075
+Yunlin,Pingtung,14,16,455
+Pingtung,Taipei,16,1,1082
+Pingtung,New Taipei,16,2,2441
+Pingtung,Taoyuan,16,3,1565
+Pingtung,Taichung,16,4,2136
+Pingtung,Tainan,16,5,3257
+Pingtung,Kaohsiung,16,6,14393
+Pingtung,Hsinchu,16,8,489
+Pingtung,Chiayi,16,9,1275
+Pingtung,Miaoli,16,11,373
+Pingtung,Changhua,16,12,1097
+Pingtung,Nantou,16,13,493
+Pingtung,Yunlin,16,14,737

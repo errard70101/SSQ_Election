@@ -3,11 +3,13 @@
 Created on Mon May 21 17:28:20 2018
 
 @author: Shih-Yang Lin
+
+This script calculates the counterfactual market share when the prices of all
+transportation modes change.
 """
 
 import numpy as np
 import pandas as pd
-import time
 from BLP_market_share import calculate_n_consumer_market_share as cal_mkt_shr
 import matplotlib.pyplot as plt
 
@@ -31,7 +33,7 @@ def read_csv(file_path):
     return(dta)
 
 dta = read_csv(file_path)
-dta['const'] = np.ones((len(dta), 1))
+dta.loc[:, 'const'] = np.ones((len(dta), 1))
 
 market_population = read_csv(market_population_file_name)
 market_population = market_population.drop(columns = ['depcity', 'arrcity'])
@@ -64,34 +66,29 @@ v_set = np.random.RandomState(seed = 654781324).normal(size = (n_consumers, len(
 price_adjustment = np.array(range(5, 16)) * 0.1
 counterfactual_n_voters = list()
 
-tic = time.time()
 for i in range(len(price_adjustment)):
     data = dta[['priced', 'timed', 'pop_dep', 'moninc', 'edu',
             'unemploymentrate_arr', 'unemploymentrate_dep',
-            'poll', 'mayor_arr', 'const']]
+            'poll', 'mayor_arr', 'const']].copy()
     
-    data['priced'] = dta['priced']*price_adjustment[i]
+    data.loc[:, 'priced'] = dta['priced'] * price_adjustment[i]
     work = ('Total setting of prices is ' + str(len(price_adjustment)) + '.' +
             ' Calculating the ' + str(i + 1) + 'th one.')
     congrats = 'Finish calculating.'
     
-    dta[str(price_adjustment[i]) + 'p_' + 'c_mkt_shr'] = cal_mkt_shr(estimates, sigma, data, end_var, v_set, mkt, n_consumers, work, congrats)
-    counterfactual_n_voters.append(sum(dta[str(price_adjustment[i]) + 'p_' + 'c_mkt_shr']* dta['cencus_pop']))
+    dta.loc[:, (str(price_adjustment[i]) + 'p_' + 'c_mkt_shr')] = cal_mkt_shr(estimates, sigma, data, end_var, v_set, mkt, n_consumers, work, congrats)
+    counterfactual_n_voters.append(sum(dta[str(price_adjustment[i]) + 'p_' + 'c_mkt_shr']* dta['census_pop']))
     
-toc = time.time()
-
-print('')
-print('Total time elaped is ' + str(round((toc - tic)/60, 2)) + ' mins.')
 #%%
-total_pop = sum(market_population['cencus_pop'])
-observed_voters = sum(dta['marketshare1'] * dta['cencus_pop'])
+total_pop = sum(market_population['census_pop'])
+observed_voters = sum(dta['marketshare1'] * dta['census_pop'])
 
 #%% Calculate traffic volume change for voting
 n_voters_difference = list()
 n_voters_difference_percentage = list()
 i = 0
 for n_voters in counterfactual_n_voters:
-    n_voters_difference.append(round(n_voters - counterfactual_n_voters[1]))
+    n_voters_difference.append(round(n_voters - counterfactual_n_voters[5]))
     n_voters_difference_percentage.append(round(n_voters_difference[i]*100/total_pop, 2))
     i += 1
     
@@ -114,4 +111,4 @@ plt.show()
     
 
 #%% Save the counterfactual result
-counterfactual_result.to_csv("counterfactual_total_price_change_temp.csv", index = False)
+counterfactual_result.to_csv("counterfactual_total_price_change.csv", index = False)
