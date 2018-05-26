@@ -13,11 +13,16 @@ import pandas as pd
 import time
 from BLP_market_share import calculate_n_consumer_market_share as cal_mkt_shr
 import matplotlib.pyplot as plt
+import sys
 
 # Read data
 # =============================================================================
-file_path = "C:/SSQ_Election/RawData20180515.csv"
-market_population_file_name = "C:/SSQ_Election/adj_census_pop_T.csv"
+if sys.platform == 'darwin':
+    file_path = "/Users/errard/Dropbox/SSQ_Election/RawData20180515.csv"
+    market_population_file_name = "/Users/errard/Dropbox/SSQ_Election/adj_census_pop_T.csv"
+else:
+    file_path = "C:/SSQ_Election/RawData20180515.csv"
+    market_population_file_name = "C:/SSQ_Election/adj_census_pop_T.csv"
 
 def read_csv(file_path):
     '''
@@ -60,7 +65,7 @@ mkt = dta['mkt']
 
 end_var = [0]
 
-v_set = np.random.RandomState(seed = 654781324).normal(size = (n_consumers, len(sigma)))
+seed = 654781324
 # =============================================================================
 #%% Calculate the market share when nothing changes. This calculation costs
 #   about 3.5 mins.
@@ -72,7 +77,8 @@ data = dta[['priced', 'timed', 'pop_dep', 'moninc', 'edu',
 work = 'Calculating the market share when nothing changes.'
 congrats = 'Finish calculating.'
     
-dta = dta.assign(simulated_mkt_shr = cal_mkt_shr(estimates, sigma, data, end_var, v_set, mkt, n_consumers, work, congrats))
+dta = dta.assign(simulated_mkt_shr = cal_mkt_shr(estimates, sigma, data, end_var, 
+                                                 mkt, n_consumers, work, congrats, seed))
 #%% Calculate counterfactual market share when HSR does not exist. This calculation
 #   costs about 3.5 mins.
 
@@ -89,7 +95,10 @@ data = counterfactual_data.drop(columns = ['brand', 'mkt'])
 work = 'Calculating the market share when HSR does not exist.'
 
 counterfactual_data = counterfactual_data.assign(c_mkt_shr = 
-                                                 cal_mkt_shr(estimates, sigma, data, end_var, v_set, mkt, n_consumers, work, congrats))
+                                                 cal_mkt_shr(estimates, sigma, 
+                                                             data, end_var, mkt, 
+                                                             n_consumers, work, 
+                                                             congrats, seed))
 
 del work, congrats, data, mkt
 #%% Analyze the result

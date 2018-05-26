@@ -12,17 +12,23 @@ import numpy as np
 import pandas as pd
 from BLP_market_share import calculate_n_consumer_market_share as cal_mkt_shr
 import matplotlib.pyplot as plt
+import sys
 
 # Read data
 # =============================================================================
-file_path = "C:/SSQ_Election/RawData20180515.csv"
-market_population_file_name = "C:/SSQ_Election/adj_census_pop_T.csv"
+
+if sys.platform == 'darwin':
+    file_path = "/Users/errard/Dropbox/SSQ_Election/RawData20180515.csv"
+    market_population_file_name = "/Users/errard/Dropbox/SSQ_Election/adj_census_pop_T.csv"
+else:
+    file_path = "C:/SSQ_Election/RawData20180515.csv"
+    market_population_file_name = "C:/SSQ_Election/adj_census_pop_T.csv"
 
 def read_csv(file_path):
     '''
     This function read csv files to pandas dataframe.
-    
-    input: 
+
+    input:
         file_path: str.
     output:
         dta: pandas dataframe
@@ -59,7 +65,8 @@ mkt = dta['mkt']
 
 end_var = [0]
 
-v_set = np.random.RandomState(seed = 654781324).normal(size = (n_consumers, len(sigma)))
+seed = 654781324
+
 # =============================================================================
 
 #%% Calculating counterfactual market share.
@@ -70,15 +77,16 @@ for i in range(len(price_adjustment)):
     data = dta[['priced', 'timed', 'pop_dep', 'moninc', 'edu',
             'unemploymentrate_arr', 'unemploymentrate_dep',
             'poll', 'mayor_arr', 'const']].copy()
-    
+
     data.loc[:, 'priced'] = dta['priced'] * price_adjustment[i]
     work = ('Total setting of prices is ' + str(len(price_adjustment)) + '.' +
             ' Calculating the ' + str(i + 1) + 'th one.')
     congrats = 'Finish calculating.'
-    
-    dta.loc[:, (str(price_adjustment[i]) + 'p_' + 'c_mkt_shr')] = cal_mkt_shr(estimates, sigma, data, end_var, v_set, mkt, n_consumers, work, congrats)
+
+    dta.loc[:, (str(price_adjustment[i]) + 'p_' + 'c_mkt_shr')] = cal_mkt_shr(estimates, 
+            sigma, data, end_var, mkt, n_consumers, work, congrats, seed)
     counterfactual_n_voters.append(sum(dta[str(price_adjustment[i]) + 'p_' + 'c_mkt_shr']* dta['census_pop']))
-    
+
 #%%
 total_pop = sum(market_population['census_pop'])
 observed_voters = sum(dta['marketshare1'] * dta['census_pop'])
@@ -91,7 +99,7 @@ for n_voters in counterfactual_n_voters:
     n_voters_difference.append(round(n_voters - counterfactual_n_voters[5]))
     n_voters_difference_percentage.append(round(n_voters_difference[i]*100/total_pop, 2))
     i += 1
-    
+
 counterfactual_result = pd.DataFrame(data = {'All traffic volume change for voting': n_voters_difference,
                                              'All price change %': ['-50%', '-40%', '-30%', '-20%', '-10%', '0%', '10%', '20%', '30%', '40%', '50%'],
                                              'All traffic volume change for voting %': n_voters_difference_percentage})
@@ -99,16 +107,16 @@ counterfactual_result = pd.DataFrame(data = {'All traffic volume change for voti
 counterfactual_result = counterfactual_result[['All price change %', 'All traffic volume change for voting', 'All traffic volume change for voting %']]
 print(counterfactual_result)
 #%% Produce Figure 3
-    
+
 plt.plot(price_adjustment, n_voters_difference)
 plt.ylabel('All traffic volume change for voting')
 plt.xlabel('All price change %')
 plt.yticks([-60000, -40000, -20000, 0, 20000, 40000, 60000, 80000])
-plt.xticks(price_adjustment, 
+plt.xticks(price_adjustment,
            ['-50%', '-40%', '-30%', '-20%', '-10%', '0%', '10%', '20%', '30%', '40%', '50%'])
 plt.grid(True)
 plt.show()
-    
+
 
 #%% Save the counterfactual result
 counterfactual_result.to_csv("counterfactual_total_price_change.csv", index = False)
