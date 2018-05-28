@@ -49,7 +49,7 @@ def calculate_utility(estimates, sigma, data, end_var, v):
     estimates = np.array(estimates).reshape(len(estimates), 1)
     sigma = np.array(sigma).reshape(len(sigma), 1)
     endogenous_variables = data.iloc[:, end_var]
-
+    
     # Calculate utilities
     uti = np.dot(data, estimates) + np.dot(endogenous_variables, sigma*v)
 
@@ -89,7 +89,10 @@ def calculate_one_consumer_market_share(uti, mkt):
 
     return(mkt_shr)
 
-def calculate_n_consumer_market_share(estimates, sigma, data, end_var, v_set, mkt, n_consumers, work = 'Calculating the market share.', congrats = 'Finished.'):
+def calculate_n_consumer_market_share(estimates, sigma, data, end_var, mkt, 
+                                      n_consumers, 
+                                      work = 'Calculating the market share.', 
+                                      congrats = 'Finished.', seed = 0):
     '''
     Calculate mean utility of each products base on the estimates and data.
     input:
@@ -98,13 +101,18 @@ def calculate_n_consumer_market_share(estimates, sigma, data, end_var, v_set, mk
         data: n x k numpy ndarray, the independent variables include constant 
               term.
         end_var: list, the position of endogenous variables.
-        v_set: n_consumers x len(sigma) numpy ndarray, a set of consumer tastes.
         mkt: n x 1 numpy array, the market id of each products in each markets.
         n_consumers: int, number of simulated consumers in each market.
     output:
         mkt_shr: numpy array, the average market share of n consumers.
     '''
     tic = time.time()
+    
+    if seed == 0:
+        seed = np.random.randint(1, 2**32 - 2)
+    
+    # v_set: n_consumers x len(sigma) numpy ndarray, a set of consumer tastes.
+    v_set = np.random.RandomState(seed = seed).normal(size = (n_consumers, len(sigma)))
     
     mkt_shr = np.zeros((len(data), ))
     for i in range(n_consumers):
