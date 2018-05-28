@@ -10,7 +10,6 @@ This script calculates the counterfactual market share when High Speed Rail
 
 import numpy as np
 import pandas as pd
-import time
 from BLP_market_share import calculate_n_consumer_market_share as cal_mkt_shr
 import matplotlib.pyplot as plt
 
@@ -145,7 +144,6 @@ for i in HSR_mkt_data.index:
     HSR_mkt_data.loc[i, 'available_modes'] = len(HSR_mkt_data[HSR_mkt_data['mkt'] == HSR_mkt_data.loc[i, 'mkt']])
 
 #%% 
-
 analysis_1 = HSR_mkt_data.groupby(by = ['mkt', 'b_brand']).agg({'observed_voters': 'sum',
                                                                 'c_voters_diff': 'sum',
                                                                 'available_modes': 'mean'})
@@ -170,7 +168,7 @@ analysis_1 = analysis_1.assign(sub_shr = substitution_share,
 
 analysis_1 = analysis_1.assign(predicted_voter_change = analysis_1['sub_shr'] * analysis_1['obs_HSR_voter'])
 
-#%%
+#%% Produce Table xxx
 HSR_observed_voters = analysis_1[analysis_1['b_brand'] == 2]
 HSR_observed_voters = HSR_observed_voters.groupby(by = ['available_modes']).agg({'observed_voters': 'sum'})
 
@@ -189,17 +187,54 @@ summary_result = summary_result.assign(avg_obs_voters = round(summary_result['ob
 
 summary_result = summary_result.assign(avg_pre_voters_diff_p = round(summary_result['avg_pre_voters_diff']*100/summary_result['avg_obs_voters'], 2))
 
+# Calculate averages
 round(sum(summary_result['HSR_observed_voters'])/sum(summary_result['mkt_count']))
 round(sum(summary_result['observed_voters'])/sum(summary_result['mkt_count']))
 round(sum(summary_result['predicted_voter_change'])/sum(summary_result['mkt_count']))
 
-    #%%
+#%% Produce Table xxx
 
-#total_pop = sum(market_population['census_pop'])
-#observed_voters = sum(dta['marketshare1'] * dta['census_pop'])
+city_location_dict = {1: 'N', 2: 'N', 3: 'N', 8: 'N',
+                      4: 'C',
+                      5: 'S', 6: 'S', 9: 'S'}
+dep_region = analysis_1['mkt'].copy()
+arr_region = analysis_1['mkt'].copy()
 
-#observed_voters = observed_data.loc[:, ['mkt', 'n_voters', 'available_modes']].groupby(by = 'mkt').agg({'n_voters': 'sum',
-#                                                                                                        'available_modes': 'mean'})
+for i in range(len(dep_region)):
+    dep_region[i] = str(dep_region[i])[0]
+    arr_region[i] = str(arr_region[i])[2]
+
+dep_region = dep_region.replace(city_location_dict)
+arr_region = arr_region.replace(city_location_dict)
+
+analysis_2 = analysis_1.assign(dep_region = dep_region, arr_region = arr_region)
+
+HSR_observed_voters = analysis_2[analysis_2['b_brand'] == 2]
+HSR_observed_voters = HSR_observed_voters.groupby(by = ['dep_region', 'arr_region']).agg({'observed_voters': 'sum'})
+
+summary_result_2 = analysis_2.groupby(by = ['dep_region', 'arr_region']).agg({'observed_voters': 'sum',
+                                                                              'predicted_voter_change': 'sum'})
+
+summary_mkt_count_2 = analysis_2.groupby(by = ['dep_region', 'arr_region', 'mkt']).count().reset_index()
+summary_mkt_count_2 = summary_mkt_count_2.groupby(by = ['dep_region', 'arr_region']).count()
+
+#%%
+summary_result_2 = summary_result_2.assign(HSR_observed_voters = HSR_observed_voters['observed_voters'],
+                                           mkt_count = summary_mkt_count_2['mkt'])
+
+summary_result_2 = summary_result_2.assign(avg_obs_voters = round(summary_result_2['observed_voters']/summary_result_2['mkt_count']),
+                                           avg_pre_voters_diff = round(summary_result_2['predicted_voter_change']/summary_result_2['mkt_count']),
+                                           avg_HSR_obs_voters = round(summary_result_2['HSR_observed_voters']/summary_result_2['mkt_count']),
+                                           HSR_observed_voter_mkt_shr = round(summary_result_2['HSR_observed_voters']*100/summary_result_2['observed_voters'], 2))
+
+summary_result_2 = summary_result_2.assign(avg_pre_voters_diff_p = round(summary_result_2['avg_pre_voters_diff']*100/summary_result_2['avg_obs_voters'], 2))
+
+# Calculate averages
+round(sum(summary_result_2['HSR_observed_voters'])/sum(summary_result_2['mkt_count']))
+round(sum(summary_result_2['observed_voters'])/sum(summary_result_2['mkt_count']))
+round(sum(summary_result_2['predicted_voter_change'])/sum(summary_result_2['mkt_count']))
+
+
 #%% Produce Figure 3
     
 #plt.plot(price_adjustment, n_voters_difference)
