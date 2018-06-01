@@ -17,6 +17,8 @@ The program codes to produce the result in SSQ artcle,
 
 1. counterfactual_total_price_change.py: calculate the counterfactual market share when the prices of all transportation modes change.
 
+2. counterfactual_absentee_voting.py: calculate the counterfactual market share when absentee voting is allowed.
+
 2. counterfactual_no_HSR.py: calculates the counterfactual market share when High Speed Rail (HSR) does not exist.
 
 3. BLP_market_share.py: a script to calculate predicted market share.

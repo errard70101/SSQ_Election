@@ -20,9 +20,11 @@ import sys
 if sys.platform == 'darwin':
     file_path = "/Users/errard/Dropbox/SSQ_Election/RawData20180515.csv"
     market_population_file_name = "/Users/errard/Dropbox/SSQ_Election/adj_census_pop_T.csv"
+    xi_file_name = "/Users/errard/Dropbox/SSQ_Election/xi.csv"
 else:
     file_path = "C:/SSQ_Election/RawData20180515.csv"
     market_population_file_name = "C:/SSQ_Election/adj_census_pop_T.csv"
+    xi_file_name = "C:/SSQ_Election/xi.csv"
 
 def read_csv(file_path):
     '''
@@ -44,6 +46,9 @@ dta.loc[:, 'const'] = np.ones((len(dta), 1))
 market_population = read_csv(market_population_file_name)
 market_population = market_population.drop(columns = ['depcity', 'arrcity'])
 
+xi = np.loadtxt(xi_file_name)
+dta = dta.assign(xi = xi)
+
 dta = pd.merge(dta, market_population,
                left_on = ['depcity', 'arrcity'],
                right_on = ['depcity_code', 'arrcity_code'],
@@ -54,12 +59,12 @@ dta = pd.merge(dta, market_population,
 n_consumers = int(1e4)
 
 estimates = [-5.246357, -.6285018, -.8258803, -1.604927, 1.448219,
-              0.7957358,  1.093028, -0.2235259, -0.1370856, -6.126835]
+              0.7957358,  1.093028, -0.2235259, -0.1370856, -6.126835, 1]
 sigma = [2.816481]
 
 data = dta[['priced', 'timed', 'pop_dep', 'moninc', 'edu',
             'unemploymentrate_arr', 'unemploymentrate_dep',
-            'poll', 'mayor_arr', 'const']]
+            'poll', 'mayor_arr', 'const', 'xi']]
 
 mkt = dta['mkt']
 
@@ -76,7 +81,7 @@ counterfactual_n_voters = list()
 for i in range(len(price_adjustment)):
     data = dta[['priced', 'timed', 'pop_dep', 'moninc', 'edu',
             'unemploymentrate_arr', 'unemploymentrate_dep',
-            'poll', 'mayor_arr', 'const']].copy()
+            'poll', 'mayor_arr', 'const', 'xi']].copy()
 
     data.loc[:, 'priced'] = dta['priced'] * price_adjustment[i]
     work = ('Total setting of prices is ' + str(len(price_adjustment)) + '.' +
@@ -111,12 +116,12 @@ print(counterfactual_result)
 plt.plot(price_adjustment, n_voters_difference)
 plt.ylabel('All traffic volume change for voting')
 plt.xlabel('All price change %')
-plt.yticks([-60000, -40000, -20000, 0, 20000, 40000, 60000, 80000])
+plt.yticks([-80000, -60000, -40000, -20000, 0, 
+            20000, 40000, 60000, 80000, 100000, 120000])
 plt.xticks(price_adjustment,
            ['-50%', '-40%', '-30%', '-20%', '-10%', '0%', '10%', '20%', '30%', '40%', '50%'])
 plt.grid(True)
+plt.savefig(fname = "C:/SSQ_Election/fig3.png", format = 'png')
 plt.show()
-
-
 #%% Save the counterfactual result
 counterfactual_result.to_csv("counterfactual_total_price_change.csv", index = False)

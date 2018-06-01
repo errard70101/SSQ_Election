@@ -19,9 +19,11 @@ import sys
 if sys.platform == 'darwin':
     file_path = "/Users/errard/Dropbox/SSQ_Election/RawData20180515.csv"
     market_population_file_name = "/Users/errard/Dropbox/SSQ_Election/adj_census_pop_T.csv"
+    xi_file_name = "/Users/errard/Dropbox/SSQ_Election/xi.csv"
 else:
     file_path = "C:/SSQ_Election/RawData20180515.csv"
     market_population_file_name = "C:/SSQ_Election/adj_census_pop_T.csv"
+    xi_file_name = "C:/SSQ_Election/xi.csv"
 
 def read_csv(file_path):
     '''
@@ -40,6 +42,9 @@ def read_csv(file_path):
 dta = read_csv(file_path)
 dta['const'] = np.ones((len(dta), 1))
 
+xi = np.loadtxt(xi_file_name)
+dta = dta.assign(xi = xi)
+
 market_population = read_csv(market_population_file_name)
 market_population = market_population.drop(columns = ['depcity', 'arrcity'])
 
@@ -53,12 +58,12 @@ dta = pd.merge(dta, market_population,
 n_consumers = int(1e4)
 
 estimates = [-5.246357, -.6285018, -.8258803, -1.604927, 1.448219,
-              0.7957358,  1.093028, -0.2235259, -0.1370856, -6.126835]
+              0.7957358,  1.093028, -0.2235259, -0.1370856, -6.126835, 1]
 sigma = [2.816481]
 
 data = dta[['priced', 'timed', 'pop_dep', 'moninc', 'edu',
             'unemploymentrate_arr', 'unemploymentrate_dep',
-            'poll', 'mayor_arr', 'const']]
+            'poll', 'mayor_arr', 'const', 'xi']]
 
 mkt = dta['mkt']
 
@@ -71,7 +76,7 @@ seed = 654781324
 
 data = dta[['priced', 'timed', 'pop_dep', 'moninc', 'edu',
             'unemploymentrate_arr', 'unemploymentrate_dep',
-            'poll', 'mayor_arr', 'const']]
+            'poll', 'mayor_arr', 'const', 'xi']]
     
 work = 'Calculating the market share when nothing changes.'
 congrats = 'Finish calculating.'
@@ -83,7 +88,7 @@ dta = dta.assign(simulated_mkt_shr = cal_mkt_shr(estimates, sigma, data, end_var
 
 counterfactual_data = dta[['priced', 'timed', 'pop_dep', 'moninc', 'edu',
                            'unemploymentrate_arr', 'unemploymentrate_dep',
-                           'poll', 'mayor_arr', 'const', 'brand', 'mkt']]
+                           'poll', 'mayor_arr', 'const', 'xi', 'brand', 'mkt']]
     
 counterfactual_data = counterfactual_data[counterfactual_data['brand'] > 203]
 
@@ -197,9 +202,12 @@ summary_result = summary_result.assign(avg_obs_voters = round(summary_result['ob
 summary_result = summary_result.assign(avg_pre_voters_diff_p = round(summary_result['avg_pre_voters_diff']*100/summary_result['avg_obs_voters'], 2))
 
 # Calculate averages
-round(sum(summary_result['HSR_observed_voters'])/sum(summary_result['mkt_count']))
-round(sum(summary_result['observed_voters'])/sum(summary_result['mkt_count']))
-round(sum(summary_result['predicted_voter_change'])/sum(summary_result['mkt_count']))
+print('The average observed HSR voters:')
+print(round(sum(summary_result['HSR_observed_voters'])/sum(summary_result['mkt_count'])))
+print('The average observed voters:')
+print(round(sum(summary_result['observed_voters'])/sum(summary_result['mkt_count'])))
+print('The average predicted voter change:')
+print(round(sum(summary_result['predicted_voter_change'])/sum(summary_result['mkt_count'])))
 
 #%% Produce Table xxx
 
@@ -239,22 +247,6 @@ summary_result_2 = summary_result_2.assign(avg_obs_voters = round(summary_result
 summary_result_2 = summary_result_2.assign(avg_pre_voters_diff_p = round(summary_result_2['avg_pre_voters_diff']*100/summary_result_2['avg_obs_voters'], 2))
 
 # Calculate averages
-round(sum(summary_result_2['HSR_observed_voters'])/sum(summary_result_2['mkt_count']))
-round(sum(summary_result_2['observed_voters'])/sum(summary_result_2['mkt_count']))
-round(sum(summary_result_2['predicted_voter_change'])/sum(summary_result_2['mkt_count']))
-
-
-#%% Produce Figure 3
-    
-#plt.plot(price_adjustment, n_voters_difference)
-#plt.ylabel('All traffic volume change for voting')
-#plt.xlabel('All price change %')
-#plt.yticks([-60000, -40000, -20000, 0, 20000, 40000, 60000, 80000])
-#plt.xticks(price_adjustment, 
-#           ['-50%', '-40%', '-30%', '-20%', '-10%', '0%', '10%', '20%', '30%', '40%', '50%'])
-#plt.grid(True)
-#plt.show()
-    
-
-#%% Save the counterfactual result
-#counterfactual_result.to_csv("counterfactual_total_price_change_temp.csv", index = False)
+print(round(sum(summary_result_2['HSR_observed_voters'])/sum(summary_result_2['mkt_count'])))
+print(round(sum(summary_result_2['observed_voters'])/sum(summary_result_2['mkt_count'])))
+print(round(sum(summary_result_2['predicted_voter_change'])/sum(summary_result_2['mkt_count'])))
