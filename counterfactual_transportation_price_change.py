@@ -251,4 +251,4 @@ make_subplot(1, 0, n_voters_difference_bus, 'Bus',
 make_subplot(1, 1, n_voters_difference_car, 'Car',
              'Traffic volume change for voting')
 
-fig.savefig(save_path + 'fig/fig4b.png')
+fig.savefig(save_path + 'fig/fig4b.eps')
