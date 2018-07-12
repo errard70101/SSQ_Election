@@ -11,7 +11,6 @@ is allowed in all markets.
 import numpy as np
 import pandas as pd
 from BLP_market_share import calculate_n_consumer_market_share as cal_mkt_shr
-import matplotlib.pyplot as plt
 import sys
 
 # Read data

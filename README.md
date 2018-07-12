@@ -19,11 +19,17 @@ The program codes to produce the result in SSQ artcle,
 
 2. counterfactual_absentee_voting.py: calculate the counterfactual market share when absentee voting is allowed.
 
-2. counterfactual_no_HSR.py: calculates the counterfactual market share when High Speed Rail (HSR) does not exist.
+3. counterfactual_no_HSR.py: calculates the counterfactual market share when High Speed Rail (HSR) does not exist.
 
-3. BLP_market_share.py: a script to calculate predicted market share.
+4. counterfactual_no_local_cost.py: calculates the counterfactual market share when there are no local travel pecuniary and time costs.
 
-4. progress.py: a script to show progress bar by Vladimir Ignatev.
+5. counterfactual_transportation_price_change.py: calculates the counterfactual market share when the prices of a specific transportation mode change.
+
+6. BLP_market_share.py: a script to calculate predicted market share.
+
+7. progress.py: a script to show progress bar by Vladimir Ignatev.
+
+8. contraction_mapping.py: performs the contraction mapping described in BLP (1995) paper
 
 ## C. Data files:
 1. adj_census_pop_T.csv: the population data based on the 2010 Population Census conducted by the Ministry of the Interior.

@@ -5,7 +5,7 @@ Created on Sat May 26 16:20:26 2018
 
 @author: errard
 
-This scripts perform the contraction mapping described in BLP (1995) paper.
+This scripts performs the contraction mapping described in BLP (1995) paper.
 """
 
 import numpy as np
@@ -20,9 +20,11 @@ import sys
 if sys.platform == 'darwin':
     file_path = "/Users/errard/Dropbox/SSQ_Election/RawData20180515.csv"
     market_population_file_name = "/Users/errard/Dropbox/SSQ_Election/adj_census_pop_T.csv"
+    xi_file_name = "/Users/errard/Dropbox/SSQ_Election/xi.csv"
 else:
     file_path = "C:/SSQ_Election/RawData20180515.csv"
     market_population_file_name = "C:/SSQ_Election/adj_census_pop_T.csv"
+    xi_file_name = "C:/SSQ_Election/xi.csv"
 
 def read_csv(file_path):
     '''
@@ -126,9 +128,12 @@ def contraction_mapping(mkt_shr, estimates, sigma, data, end_var, mkt,
         
    
     return(delta, xi)
-    
+
+#%%
+xi = np.loadtxt(xi_file_name)
+
 mean_uti, xi = contraction_mapping(mkt_shr, estimates, sigma, data, end_var, 
-                                   mkt, xi = xi, n_consumers = int(1e4), max_iter = 5)
+                                   mkt, xi = xi, n_consumers = int(1e4), max_iter = 700)
 
 #%%
 

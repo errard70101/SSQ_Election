@@ -18,10 +18,12 @@ import sys
 # =============================================================================
 
 if sys.platform == 'darwin':
+    save_path = "/Users/errard/Dropbox/SSQ_Election/"
     file_path = "/Users/errard/Dropbox/SSQ_Election/RawData20180515.csv"
     market_population_file_name = "/Users/errard/Dropbox/SSQ_Election/adj_census_pop_T.csv"
     xi_file_name = "/Users/errard/Dropbox/SSQ_Election/xi.csv"
 else:
+    save_path = "C:/SSQ_Election/"
     file_path = "C:/SSQ_Election/RawData20180515.csv"
     market_population_file_name = "C:/SSQ_Election/adj_census_pop_T.csv"
     xi_file_name = "C:/SSQ_Election/xi.csv"
@@ -95,6 +97,7 @@ for i in range(len(price_adjustment)):
 #%%
 total_pop = sum(market_population['census_pop'])
 observed_voters = sum(dta['marketshare1'] * dta['census_pop'])
+observed_nonvoters = total_pop - observed_voters
 
 #%% Calculate traffic volume change for voting
 n_voters_difference = list()
@@ -111,9 +114,10 @@ counterfactual_result = pd.DataFrame(data = {'All traffic volume change for voti
 
 counterfactual_result = counterfactual_result[['All price change %', 'All traffic volume change for voting', 'All traffic volume change for voting %']]
 print(counterfactual_result)
-#%% Produce Figure 3
 
-plt.plot(price_adjustment, n_voters_difference)
+#%% Produce Figure 3
+plt.figure(figsize = (10, 10))
+plt.plot(price_adjustment, n_voters_difference, '-', label = 'Voters')
 plt.ylabel('All traffic volume change for voting')
 plt.xlabel('All price change %')
 plt.yticks([-80000, -60000, -40000, -20000, 0, 
@@ -121,7 +125,7 @@ plt.yticks([-80000, -60000, -40000, -20000, 0,
 plt.xticks(price_adjustment,
            ['-50%', '-40%', '-30%', '-20%', '-10%', '0%', '10%', '20%', '30%', '40%', '50%'])
 plt.grid(True)
-plt.savefig(fname = "C:/SSQ_Election/fig3.png", format = 'png')
+plt.savefig(fname = save_path + "fig/fig3.esp", format = 'esp')
 plt.show()
 #%% Save the counterfactual result
-counterfactual_result.to_csv("counterfactual_total_price_change.csv", index = False)
+counterfactual_result.to_csv(save_path + "results/counterfactual_total_price_change.csv", index = False)
