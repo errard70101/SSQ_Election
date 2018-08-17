@@ -1,12 +1,12 @@
-All price change %,All traffic volume change for voting,All traffic volume change for voting %
--50%,118948,10.12
--40%,90348,7.69
--30%,64375,5.48
--20%,40825,3.47
--10%,19449,1.66
-0%,0,0.0
-10%,-17747,-1.51
-20%,-33988,-2.89
-30%,-48894,-4.16
-40%,-62611,-5.33
-50%,-75267,-6.41
+All price change %,All traffic volume change for voting,All traffic volume change for voting %,HSR traffic volume change for voting,HSR traffic volume change for voting %,train traffic volume change for voting,train traffic volume change for voting %,bus traffic volume change for voting,bus traffic volume change for voting %,car traffic volume change for voting,car traffic volume change for voting %
+-50%,118948,10.12,30772,2.62,21050,1.79,20920,1.78,46206,3.93
+-40%,90348,7.69,21373,1.82,16642,1.42,17534,1.49,34798,2.96
+-30%,64375,5.48,14014,1.19,12291,1.05,13438,1.14,24633,2.1
+-20%,40825,3.47,8233,0.7,8051,0.69,9001,0.77,15541,1.32
+-10%,19449,1.66,3658,0.31,3949,0.34,4469,0.38,7373,0.63
+0%,0,0.0,0,0.0,0,0.0,0,0.0,0,0.0
+10%,-17747,-1.51,-2957,-0.25,-3791,-0.32,-4314,-0.37,-6685,-0.57
+20%,-33988,-2.89,-5375,-0.46,-7425,-0.63,-8418,-0.72,-12770,-1.09
+30%,-48894,-4.16,-7371,-0.63,-10903,-0.93,-12287,-1.05,-18333,-1.56
+40%,-62611,-5.33,-9036,-0.77,-14230,-1.21,-15911,-1.35,-23433,-1.99
+50%,-75267,-6.41,-10438,-0.89,-17412,-1.48,-19291,-1.64,-28126,-2.39

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon May 21 17:28:20 2018
+Created on Mon Jul 16 12:39:48 2018
 
 @author: Shih-Yang Lin
 
-This script calculates the counterfactual market share when the prices of all
+This script calculates the counterfactual market share when the distance of all
 transportation modes change.
 """
 
@@ -77,41 +77,44 @@ seed = 654781324
 # =============================================================================
 
 #%% Calculating counterfactual market share.
-price_adjustment = np.array(range(5, 16)) * 0.1
+distance_adjustment = np.array([-10, -5, -3, -1, 0, 1, 3, 5, 10])
+price_adjustment = distance_adjustment * (29.97*1.6/9.7/1000) #avg. fuel price:29.97
+time_adjustment = distance_adjustment * (1.6/40) #avg. speed = 40 km/hr
 counterfactual_n_voters = list()
 counterfactual_n_voters_HSR = list()
 counterfactual_n_voters_train = list()
 counterfactual_n_voters_bus = list()
 counterfactual_n_voters_car = list()
 
-for i in range(len(price_adjustment)):
+for i in range(len(time_adjustment)):
     data = dta[['priced', 'timed', 'pop_dep', 'moninc', 'edu',
             'unemploymentrate_arr', 'unemploymentrate_dep',
             'poll', 'mayor_arr', 'const', 'xi']].copy()
 
-    data.loc[:, 'priced'] = dta['priced'] * price_adjustment[i]
-    work = ('Total setting of prices is ' + str(len(price_adjustment)) + '.' +
+    data.loc[:, 'priced'] = dta['priced'] + price_adjustment[i]
+    data.loc[:, 'timed'] = dta['timed'] + time_adjustment[i]
+    work = ('Total setting of prices is ' + str(len(time_adjustment)) + '.' +
             ' Calculating the ' + str(i + 1) + 'th one.')
     congrats = 'Finish calculating.'
 
-    dta.loc[:, (str(price_adjustment[i]) + 'p_' + 'c_mkt_shr')] = cal_mkt_shr(estimates, 
+    dta.loc[:, (str(distance_adjustment[i]) + 'p_' + 'c_mkt_shr')] = cal_mkt_shr(estimates, 
             sigma, data, end_var, mkt, n_consumers, work, congrats, seed)
-    counterfactual_n_voters.append(sum(dta[str(price_adjustment[i]) + 'p_' + 'c_mkt_shr']* dta['census_pop']))
+    counterfactual_n_voters.append(sum(dta[str(distance_adjustment[i]) + 'p_' + 'c_mkt_shr']* dta['census_pop']))
     counterfactual_n_voters_HSR.append(
             sum(dta.loc[(dta['brand'] == 201) | (dta['brand'] == 202) | (dta['brand'] == 203),
-                        str(price_adjustment[i]) + 'p_' + 'c_mkt_shr']
+                        str(distance_adjustment[i]) + 'p_' + 'c_mkt_shr']
               * dta.loc[(dta['brand'] == 201) | (dta['brand'] == 202) | (dta['brand'] == 203),
                         'census_pop']))
     counterfactual_n_voters_train.append(
             sum(dta.loc[(dta['brand'] == 301) | (dta['brand'] == 302) | (dta['brand'] == 303),
-                        str(price_adjustment[i]) + 'p_' + 'c_mkt_shr']
+                        str(distance_adjustment[i]) + 'p_' + 'c_mkt_shr']
               * dta.loc[(dta['brand'] == 301) | (dta['brand'] == 302) | (dta['brand'] == 303),
                         'census_pop']))
     counterfactual_n_voters_bus.append(
-            sum(dta.loc[(dta['brand'] == 401), str(price_adjustment[i]) + 'p_' + 'c_mkt_shr']
+            sum(dta.loc[(dta['brand'] == 401), str(distance_adjustment[i]) + 'p_' + 'c_mkt_shr']
               * dta.loc[(dta['brand'] == 401), 'census_pop']))
     counterfactual_n_voters_car.append(
-            sum(dta.loc[(dta['brand'] == 502), str(price_adjustment[i]) + 'p_' + 'c_mkt_shr']
+            sum(dta.loc[(dta['brand'] == 502), str(distance_adjustment[i]) + 'p_' + 'c_mkt_shr']
               * dta.loc[(dta['brand'] == 502), 'census_pop']))
 
 #%%
@@ -132,28 +135,28 @@ n_voters_difference_car = list()
 n_voters_difference_percentage_car = list()
 
 for i in range(len(counterfactual_n_voters)):
-    n_voters_difference.append(round(counterfactual_n_voters[i] - counterfactual_n_voters[5]))
+    n_voters_difference.append(round(counterfactual_n_voters[i] - counterfactual_n_voters[4]))
     n_voters_difference_percentage.append(round(n_voters_difference[i]*100/total_pop, 2))
     n_voters_difference_HSR.append(
-            round(counterfactual_n_voters_HSR[i] - counterfactual_n_voters_HSR[5]))
+            round(counterfactual_n_voters_HSR[i] - counterfactual_n_voters_HSR[4]))
     n_voters_difference_percentage_HSR.append(
             round(n_voters_difference_HSR[i]*100/total_pop, 2))
     n_voters_difference_train.append(
-            round(counterfactual_n_voters_train[i] - counterfactual_n_voters_train[5]))
+            round(counterfactual_n_voters_train[i] - counterfactual_n_voters_train[4]))
     n_voters_difference_percentage_train.append(
             round(n_voters_difference_train[i]*100/total_pop, 2))
     n_voters_difference_bus.append(
-            round(counterfactual_n_voters_bus[i] - counterfactual_n_voters_bus[5]))
+            round(counterfactual_n_voters_bus[i] - counterfactual_n_voters_bus[4]))
     n_voters_difference_percentage_bus.append(
             round(n_voters_difference_bus[i]*100/total_pop, 2))
     n_voters_difference_car.append(
-            round(counterfactual_n_voters_car[i] - counterfactual_n_voters_car[5]))
+            round(counterfactual_n_voters_car[i] - counterfactual_n_voters_car[4]))
     n_voters_difference_percentage_car.append(
             round(n_voters_difference_car[i]*100/total_pop, 2))
     
 
 counterfactual_result = pd.DataFrame(data = {'All traffic volume change for voting': n_voters_difference,
-                                             'All price change %': ['-50%', '-40%', '-30%', '-20%', '-10%', '0%', '10%', '20%', '30%', '40%', '50%'],
+                                             'All distance change mile': ['-10', '-5', '-3', '-1', '0', '1', '3', '5', '10'],
                                              'All traffic volume change for voting %': n_voters_difference_percentage,
                                              'HSR traffic volume change for voting': n_voters_difference_HSR,
                                              'HSR traffic volume change for voting %': n_voters_difference_percentage_HSR,
@@ -164,7 +167,7 @@ counterfactual_result = pd.DataFrame(data = {'All traffic volume change for voti
                                              'car traffic volume change for voting': n_voters_difference_car,
                                              'car traffic volume change for voting %': n_voters_difference_percentage_car})
 
-counterfactual_result = counterfactual_result[['All price change %', 
+counterfactual_result = counterfactual_result[['All distance change mile', 
                                                'All traffic volume change for voting', 
                                                'All traffic volume change for voting %',
                                                'HSR traffic volume change for voting', 
@@ -179,16 +182,15 @@ print(counterfactual_result)
 
 #%% Produce Figure 3
 plt.figure(figsize = (10, 10))
-plt.plot(price_adjustment, n_voters_difference, '-', label = 'Voters')
+plt.plot(distance_adjustment, n_voters_difference, '-', label = 'Voters')
 plt.ylabel('All traffic volume change for voting')
-plt.xlabel('All price change %')
+plt.xlabel('All distance change (mile)')
 plt.yticks([-80000, -60000, -40000, -20000, 0, 
-            20000, 40000, 60000, 80000, 100000, 120000])
-plt.xticks(price_adjustment,
-           ['-50%', '-40%', '-30%', '-20%', '-10%', '0%', '10%', '20%', '30%', '40%', '50%'])
+            20000, 40000, 60000, 80000])
+
 plt.grid(True)
-plt.savefig(fname = save_path + "fig/fig3.eps", format = 'eps')
+plt.savefig(fname = save_path + "fig/fig3b.eps", format = 'eps')
 plt.show()
 #%% Save the counterfactual result
-counterfactual_result.to_csv(save_path + "results/counterfactual_total_price_change.csv", index = False)
+counterfactual_result.to_csv(save_path + "results/counterfactual_total_distance_change.csv", index = False)
 

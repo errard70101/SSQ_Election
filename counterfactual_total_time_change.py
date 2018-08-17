@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon May 21 17:28:20 2018
+Created on Mon Jul 16 10:31:27 2018
 
 @author: Shih-Yang Lin
 
-This script calculates the counterfactual market share when the prices of all
+This script calculates the counterfactual market share when the time of all
 transportation modes change.
 """
 
@@ -77,41 +77,41 @@ seed = 654781324
 # =============================================================================
 
 #%% Calculating counterfactual market share.
-price_adjustment = np.array(range(5, 16)) * 0.1
+time_adjustment = np.array(range(5, 16)) * 0.1
 counterfactual_n_voters = list()
 counterfactual_n_voters_HSR = list()
 counterfactual_n_voters_train = list()
 counterfactual_n_voters_bus = list()
 counterfactual_n_voters_car = list()
 
-for i in range(len(price_adjustment)):
+for i in range(len(time_adjustment)):
     data = dta[['priced', 'timed', 'pop_dep', 'moninc', 'edu',
             'unemploymentrate_arr', 'unemploymentrate_dep',
             'poll', 'mayor_arr', 'const', 'xi']].copy()
 
-    data.loc[:, 'priced'] = dta['priced'] * price_adjustment[i]
-    work = ('Total setting of prices is ' + str(len(price_adjustment)) + '.' +
+    data.loc[:, 'timed'] = dta['timed'] * time_adjustment[i]
+    work = ('Total setting of prices is ' + str(len(time_adjustment)) + '.' +
             ' Calculating the ' + str(i + 1) + 'th one.')
     congrats = 'Finish calculating.'
 
-    dta.loc[:, (str(price_adjustment[i]) + 'p_' + 'c_mkt_shr')] = cal_mkt_shr(estimates, 
+    dta.loc[:, (str(time_adjustment[i]) + 'p_' + 'c_mkt_shr')] = cal_mkt_shr(estimates, 
             sigma, data, end_var, mkt, n_consumers, work, congrats, seed)
-    counterfactual_n_voters.append(sum(dta[str(price_adjustment[i]) + 'p_' + 'c_mkt_shr']* dta['census_pop']))
+    counterfactual_n_voters.append(sum(dta[str(time_adjustment[i]) + 'p_' + 'c_mkt_shr']* dta['census_pop']))
     counterfactual_n_voters_HSR.append(
             sum(dta.loc[(dta['brand'] == 201) | (dta['brand'] == 202) | (dta['brand'] == 203),
-                        str(price_adjustment[i]) + 'p_' + 'c_mkt_shr']
+                        str(time_adjustment[i]) + 'p_' + 'c_mkt_shr']
               * dta.loc[(dta['brand'] == 201) | (dta['brand'] == 202) | (dta['brand'] == 203),
                         'census_pop']))
     counterfactual_n_voters_train.append(
             sum(dta.loc[(dta['brand'] == 301) | (dta['brand'] == 302) | (dta['brand'] == 303),
-                        str(price_adjustment[i]) + 'p_' + 'c_mkt_shr']
+                        str(time_adjustment[i]) + 'p_' + 'c_mkt_shr']
               * dta.loc[(dta['brand'] == 301) | (dta['brand'] == 302) | (dta['brand'] == 303),
                         'census_pop']))
     counterfactual_n_voters_bus.append(
-            sum(dta.loc[(dta['brand'] == 401), str(price_adjustment[i]) + 'p_' + 'c_mkt_shr']
+            sum(dta.loc[(dta['brand'] == 401), str(time_adjustment[i]) + 'p_' + 'c_mkt_shr']
               * dta.loc[(dta['brand'] == 401), 'census_pop']))
     counterfactual_n_voters_car.append(
-            sum(dta.loc[(dta['brand'] == 502), str(price_adjustment[i]) + 'p_' + 'c_mkt_shr']
+            sum(dta.loc[(dta['brand'] == 502), str(time_adjustment[i]) + 'p_' + 'c_mkt_shr']
               * dta.loc[(dta['brand'] == 502), 'census_pop']))
 
 #%%
@@ -179,16 +179,16 @@ print(counterfactual_result)
 
 #%% Produce Figure 3
 plt.figure(figsize = (10, 10))
-plt.plot(price_adjustment, n_voters_difference, '-', label = 'Voters')
+plt.plot(time_adjustment, n_voters_difference, '-', label = 'Voters')
 plt.ylabel('All traffic volume change for voting')
-plt.xlabel('All price change %')
+plt.xlabel('All time change %')
 plt.yticks([-80000, -60000, -40000, -20000, 0, 
             20000, 40000, 60000, 80000, 100000, 120000])
-plt.xticks(price_adjustment,
+plt.xticks(time_adjustment,
            ['-50%', '-40%', '-30%', '-20%', '-10%', '0%', '10%', '20%', '30%', '40%', '50%'])
 plt.grid(True)
-plt.savefig(fname = save_path + "fig/fig3.eps", format = 'eps')
+plt.savefig(fname = save_path + "fig/fig3a.eps", format = 'eps')
 plt.show()
 #%% Save the counterfactual result
-counterfactual_result.to_csv(save_path + "results/counterfactual_total_price_change.csv", index = False)
+counterfactual_result.to_csv(save_path + "results/counterfactual_total_time_change.csv", index = False)
 

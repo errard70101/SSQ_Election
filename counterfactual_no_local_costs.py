@@ -87,3 +87,27 @@ observed_voters = sum(dta['marketshare1'] * dta['census_pop'])
 
 #%%
 print(round((counterfactual_n_voters - observed_voters)*100/total_pop, 3))
+
+#%%
+data = dta.copy()
+
+data['b_brand'] = 0
+data.loc[(data['brand'] >= 201) & (data['brand'] <= 203), 'b_brand'] = 2 
+data.loc[(data['brand'] > 203) & (data['brand'] <= 303), 'b_brand'] = 3
+data.loc[data['brand'] == 401, 'b_brand'] = 4 
+data.loc[data['brand'] == 502, 'b_brand'] = 5
+
+#%%
+data = data.assign(predicted_voters = round(data['c_mkt_shr'] * data['census_pop']),
+                   observed_voters = round(data['marketshare1'] * data['census_pop']))
+#%% Produce Table xxx
+summary_1 = data.loc[:, ['b_brand', 'predicted_voters', 'observed_voters']].groupby(by = 'b_brand').sum()
+summary_1['difference'] = summary_1['predicted_voters'] - summary_1['observed_voters']
+summary_1 = summary_1.assign(mkt_shr_before = round(summary_1['observed_voters']*100/total_pop, 2),
+                             mkt_shr_after = round(summary_1['predicted_voters']*100/total_pop, 2))
+
+print('The number of non-voters before convenience voting is allowed is:')
+print(str(total_pop - sum(summary_1['observed_voters'])))
+
+print('The number of non-voters after convenience voting is allowed is:')
+print(str(total_pop - sum(summary_1['predicted_voters'])))
